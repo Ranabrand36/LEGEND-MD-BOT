@@ -1,11 +1,9 @@
 const { default: makeWASocket, useMultiFileAuthState, DisconnectReason } = require('@whiskeysockets/baileys');
-const { Boom } = require('@harmonyjs/boom');
 const fs = require('fs');
 const path = require('path');
 const P = require('pino');
 const config = require('./config');
 
-// Command handler function
 async function handleCommand(sock, msg) {
   try {
     const message = msg.message?.conversation || 
@@ -19,10 +17,7 @@ async function handleCommand(sock, msg) {
     const rest = args.slice(1);
     
     const sender = msg.key.remoteJid;
-    const isGroup = sender.endsWith('@g.us');
-    const senderName = msg.pushName || 'User';
     
-    // Command files load karein
     const commandPath = path.join(__dirname, 'commands', `${commandName}.js`);
     
     if (fs.existsSync(commandPath)) {
@@ -37,7 +32,6 @@ async function handleCommand(sock, msg) {
   }
 }
 
-// Main bot function
 async function startBot() {
   const { state, saveCreds } = await useMultiFileAuthState('./session');
   
