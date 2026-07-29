@@ -63,7 +63,7 @@ async function startBot() {
   
   sock.ev.on('messages.upsert', async (m) => {
     const msg = m.messages[0];
-    if (!msg.key.fromMe && msg.message) {
+    if (msg.message) {
       await handleCommand(sock, msg);
     }
   });
