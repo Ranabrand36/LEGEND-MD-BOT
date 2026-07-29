@@ -1,3 +1,4 @@
+cat > config.js << "EOF"
 require('dotenv').config();
 
 module.exports = {
@@ -9,3 +10,4 @@ module.exports = {
   channelId: '120363407511472969@newsletter',
   prefix: '.',
 };
+EOF
