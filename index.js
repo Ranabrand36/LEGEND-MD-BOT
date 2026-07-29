@@ -7,9 +7,12 @@ const QRCode = require('qrcode-terminal');
 
 async function handleCommand(sock, msg) {
   try {
-    const message = msg.message?.conversation || 
-                    msg.message?.extendedTextMessage?.text || 
-                    '';
+    let message = '';
+    if (msg.message?.conversation) message = msg.message.conversation;
+    else if (msg.message?.extendedTextMessage?.text) message = msg.message.extendedTextMessage.text;
+    else if (msg.message?.imageMessage?.caption) message = msg.message.imageMessage.caption;
+    else return;
+
     if (!message.startsWith(config.prefix)) return;
     const args = message.slice(config.prefix.length).trim().split(' ');
     const commandName = args[0].toLowerCase();
@@ -50,7 +53,7 @@ async function startBot() {
   });
   sock.ev.on('messages.upsert', async (m) => {
     const msg = m.messages[0];
-    // ✅ FIX: Self-number (You) par bhi command kaam karegi
+    // ✅ FIX: (You) wale number aur sab ke liye kaam karega
     if (msg.message) {
       await handleCommand(sock, msg);
     }
