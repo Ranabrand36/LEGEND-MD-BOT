@@ -1,7 +1,7 @@
 {
   "name": "legend-md-bot",
   "version": "1.0.0",
-  "description": "LEGEND MD WhatsApp Bot",
+  "description": "LEGEND MD WhatsApp Bot with Pairing Code",
   "main": "index.js",
   "scripts": {
     "start": "node index.js"
